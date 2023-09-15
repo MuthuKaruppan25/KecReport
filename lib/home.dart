@@ -6,13 +6,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mark/adminlogin.dart';
 import 'package:progress_indicator/progress_indicator.dart';
 
 import 'main.dart';
+
 final boo = Hive.box('boxName');
 class MyHomePage1 extends StatefulWidget {
   const MyHomePage1({Key? key}) : super(key: key);
@@ -31,6 +32,7 @@ class _MyHomePage1State extends State<MyHomePage1> {
   String value1 = 'CAT1';
   double perc=0;
   int bo=0;
+  TextEditingController x1 = new TextEditingController();
   var items = [
    'CAT1',
     'CAT2',
@@ -194,8 +196,28 @@ return WillPopScope(
 
 
             )),),
+            Padding(
+              padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
+              child: TextField(
+                controller: x1,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the current sem',
+                ),
+              ),
+            ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+                onPressed: ()async {
+                  await FirebaseFirestore.instance.collection('Details').doc('21Semdetails').update({
+                    "currentsem": int.parse(x1.text),
+                  });
 
-
+                },
+                child: const Text('Set'),
+              ),
 
             SizedBox(height: 50,),
 
@@ -226,7 +248,6 @@ return WillPopScope(
 
 
                 boxShadow: [
-
 
 
                   BoxShadow(
@@ -836,16 +857,17 @@ return WillPopScope(
         int len2=excel.tables[table]!.rows[0].length;
               print(excel.tables[table]!.rows[0][len2-1]!.value.toString()+"687");
               if(excel.tables[table]!.rows[0][len2-1]!.value.toString()=="number"){
-                await FirebaseFirestore.instance.collection("21CSE").doc(excel.tables[table]!.rows[i][0]?.value.toString()).collection("SEM4").doc(value1.toString()).set({
+                await FirebaseFirestore.instance.collection("21CSE").doc(excel.tables[table]!.rows[i][0]?.value.toString().toUpperCase()).collection("SEM${x1.text}").doc(value1.toString()).set({
                   for(int j=1;j<len2-1;j++)
                     excel.tables[table]!.rows[0][j]!.value.toString():excel.tables[table]!.rows[i][j]?.value.toString(),
                 });
-                await FirebaseFirestore.instance.collection("21CSE").doc(excel.tables[table]!.rows[i][0]?.value.toString()).set({
-                  "phoneno":excel.tables[table]!.rows[i][len2-1]?.value.toString()
+                var phone = excel.tables[table]!.rows[i][len2-1]?.value.toInt();
+                await FirebaseFirestore.instance.collection("21CSE").doc(excel.tables[table]!.rows[i][0]?.value.toString().toUpperCase()).set({
+                  "phoneno":phone.toString(),
                 });
               }
               else{
-                await FirebaseFirestore.instance.collection("21CSE").doc(excel.tables[table]!.rows[i][0]?.value.toString()).collection("SEM4").doc(value1.toString()).set({
+                await FirebaseFirestore.instance.collection("21CSE").doc(excel.tables[table]!.rows[i][0]?.value.toString().toUpperCase()).collection("SEM${x1.text}").doc(value1.toString()).set({
                   for(int j=1;j<len2;j++)
                     excel.tables[table]!.rows[0][j]!.value.toString():excel.tables[table]!.rows[i][j]?.value.toString(),
                 });

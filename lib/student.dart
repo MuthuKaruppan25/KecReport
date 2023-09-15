@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:mark/Newpage.dart';
 import 'package:mark/connect.dart';
-
+import 'package:flutter/foundation.dart';
 import 'main.dart';
 
 
@@ -39,39 +39,54 @@ class _StudentState extends State<Student> {
       ),),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(150),
-            child:Container(
-              height: 150,
-              decoration:BoxDecoration(
-                color: Color.fromARGB(255, 7, 19, 95 ),
-                borderRadius: BorderRadius.only(
+            child:StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance.collection('21CSE').doc(bo.get("pass")).snapshots(),
+              builder: (context, snapshot) {
+                return Container(
+                  height: 150,
+                  decoration:BoxDecoration(
+                    color: Color.fromARGB(255, 7, 19, 95 ),
+                    borderRadius: BorderRadius.only(
 
-                  topLeft: Radius.zero,
-                  topRight: Radius.zero,
-                  bottomLeft: Radius.zero,
-                  bottomRight: Radius.circular(50.0),
-                ),
-              ) ,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Container(
-                      height: 60,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        color:Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.zero,
-                          topRight: Radius.circular(20.0),
-                          bottomLeft: Radius.zero,
-                          bottomRight: Radius.circular(20.0),
+                      topLeft: Radius.zero,
+                      topRight: Radius.zero,
+                      bottomLeft: Radius.zero,
+                      bottomRight: Radius.circular(50.0),
+                    ),
+                  ) ,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Center(
+
+                        child: Container(
+
+                          height: 60,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            color:Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.zero,
+                              topRight: Radius.circular(20.0),
+                              bottomLeft: Radius.zero,
+                              bottomRight: Radius.circular(20.0),
+                            ),
+                          ),
+                          child: Center(child: Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Row(
+                              children: [
+                                Text("${bo.get("pass")} ",style: GoogleFonts.aclonica(textStyle: TextStyle(color: Color.fromARGB(255, 7, 19, 95 ),fontSize:16,fontWeight: FontWeight.bold)),),
+                                Text("results",style: GoogleFonts.aclonica(textStyle: TextStyle(color: Color.fromARGB(255, 7, 19, 95 ),fontWeight: FontWeight.w900)),)
+                              ],
+                            ),
+                          )),
                         ),
                       ),
-                      child: Center(child: Text("My Results",style: GoogleFonts.aclonica(textStyle: TextStyle(color: Color.fromARGB(255, 7, 19, 95 ),fontWeight: FontWeight.w900)),)),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              }
             ) ,
           ),
           backgroundColor: Color.fromARGB(255, 7, 19, 95 ),
@@ -107,6 +122,7 @@ class _StudentState extends State<Student> {
         ),
 
         body: SingleChildScrollView(
+
           child: Column(
             children: [
               SizedBox(height: 10,),
@@ -125,9 +141,14 @@ class _StudentState extends State<Student> {
               onPressed: ()async{
                 int x=0;
                 var y=<dynamic>[];
+                int prev;
+
+
+
                 await FirebaseFirestore.instance.collection("Details")
                     .doc("21Semdetails")
-                    .get().then((result){x=result.get("currentsem");y=result.get("4sub");});
+                    .get().then((result){x=result.get("currentsem");
+                      y=result.get("${x}sub");});
 
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -210,116 +231,116 @@ class _StudentState extends State<Student> {
                 ],
               ),
             ),SizedBox(height: 10,),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 25),
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       Text("Past Semester",style: GoogleFonts.aclonica(textStyle: TextStyle(fontSize: 25, color: Color.fromARGB(255, 7, 19, 95 ),fontWeight: FontWeight.w900)),)
-            //     ],
-            //   ),
-            // ),
-            //
-            //
-            //   Container(
-            //     child: StreamBuilder<DocumentSnapshot>(
-            //       stream: FirebaseFirestore.instance.collection("Details").doc("21Semdetails").snapshots(),
-            //
-            //
-            //       builder: (context, AsyncSnapshot snapshot) {
-            //         if(snapshot.hasError)
-            //         {
-            //           return Text("${snapshot.error}");
-            //         }
-            //         else
-            //         {
-            //           if(snapshot.hasData) {
-            //             Map<String,dynamic> vv=snapshot.data.data();
-            //
-            //
-            //             return Padding(
-            //               padding: const EdgeInsets.all(8.0),
-            //               child: ListView.builder(
-            //                 shrinkWrap: true,
-            //                 physics: NeverScrollableScrollPhysics(),
-            //                 itemCount: vv["currentsem"]-1,
-            //                 itemBuilder: (BuildContext context, index) {
-            //                     return TextButton(
-            //                       onPressed: () async {
-            //                         int x=0;
-            //                         List<dynamic> y=<dynamic>[];
-            //                         await FirebaseFirestore.instance.collection("Details")
-            //                             .doc("21Semdetails")
-            //                             .get().then((result){x=result.get("currentsem");y=result.get("4sub");});
-            //
-            //                         Navigator.of(context).push(
-            //                           MaterialPageRoute(
-            //                             builder: (context) =>  New(card:"SEM${x-index-1}",nn:y),
-            //                           ),
-            //                         );
-            //
-            //                       },
-            //                       child: Column(
-            //                         children: [
-            //                           SizedBox(height: 15,),
-            //                           Container(
-            //                           padding: EdgeInsets.all(20),
-            //                           height: 200,
-            //                           width: 350,
-            //                           decoration: BoxDecoration(
-            //                             color: Colors.indigo,
-            //                             borderRadius: BorderRadius.circular(20),
-            //                           ),
-            //                           child: Row(
-            //                             crossAxisAlignment: CrossAxisAlignment.start,
-            //                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                             children: [
-            //                               Column(
-            //                                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                                 children: [
-            //                                   Column(
-            //                                     crossAxisAlignment: CrossAxisAlignment.start,
-            //                                     children: [
-            //                                       Text(
-            //                                         "SEM ${vv["currentsem"]-1-index}",
-            //                                         style: TextStyle(
-            //                                           color: Colors.white,
-            //                                           fontSize: 20
-            //                                         ),
-            //                                       ),
-            //                                     ],
-            //                                   ),
-            //                                   Text(
-            //                                     "View marks",
-            //                                     style: TextStyle(
-            //                                       fontWeight: FontWeight.w900,
-            //                                         color: Colors.white,
-            //                                         fontSize: 20
-            //
-            //                                       ),
-            //                                   ),
-            //
-            //                                 ],
-            //                               ),
-            //
-            //                             ],
-            //                           ),
-            //                   ),
-            //                         ],
-            //                       ),
-            //                     );
-            //                 },
-            //               ),
-            //             );
-            //           }
-            //           return Center(
-            //             child: CircularProgressIndicator(),
-            //           );
-            //         }
-            //       },
-            //     ),
-            //   ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 25),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Past Semester",style: GoogleFonts.aclonica(textStyle: TextStyle(fontSize: 25, color: Color.fromARGB(255, 7, 19, 95 ),fontWeight: FontWeight.w900)),)
+                ],
+              ),
+            ),
+
+
+              Container(
+                child: StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance.collection("Details").doc("21Semdetails").snapshots(),
+
+
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if(snapshot.hasError)
+                    {
+                      return Text("${snapshot.error}");
+                    }
+                    else
+                    {
+                      if(snapshot.hasData) {
+                        Map<String,dynamic> vv=snapshot.data.data();
+
+
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: vv["currentsem"]-4,
+                            itemBuilder: (BuildContext context, index) {
+                                return TextButton(
+                                  onPressed: () async {
+                                    int x=0;
+                                    List<dynamic> y=<dynamic>[];
+                                    await FirebaseFirestore.instance.collection("Details")
+                                        .doc("21Semdetails")
+                                        .get().then((result){x=result.get("currentsem");y=result.get("${x-index-1}sub");});
+
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>  New(card:"SEM${x-index-1}",nn:y),
+                                      ),
+                                    );
+
+                                  },
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 15,),
+                                      Container(
+                                      padding: EdgeInsets.all(20),
+                                      height: 200,
+                                      width: 350,
+                                      decoration: BoxDecoration(
+                                        color: Colors.indigo,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "SEM ${vv["currentsem"]-1-index}",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Text(
+                                                "View marks",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w900,
+                                                    color: Colors.white,
+                                                    fontSize: 20
+
+                                                  ),
+                                              ),
+
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
+                              ),
+                                    ],
+                                  ),
+                                );
+                            },
+                          ),
+                        );
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
             ],
           ),
         ),

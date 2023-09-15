@@ -86,7 +86,8 @@ class Neww extends StatelessWidget {
         ],
       ),
 
-      body:(card.toLowerCase()!="sem")? SingleChildScrollView(
+      body:(card.toString()!="SEM")?
+      SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: 10,),
@@ -119,7 +120,7 @@ class Neww extends StatelessWidget {
                                 SizedBox(height: 15,),
                                 Container(
                                   padding: EdgeInsets.all(20),
-                                  height: 200,
+                                  height: 170,
                                   width: 350,
                                   decoration: BoxDecoration(
                                     color: Colors.indigo,
@@ -177,7 +178,8 @@ class Neww extends StatelessWidget {
             ),
           ],
         ),
-      ):SingleChildScrollView(
+      ):
+      SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(height: 10,),
@@ -188,7 +190,7 @@ class Neww extends StatelessWidget {
 
 
                 builder: (context, AsyncSnapshot snapshot) {
-                  List<String> ni=["CGPA","GPA","Python","Database Management\nSystem","Operating System","Probability and Statistics","Web Technology","Design and Analysis\nof Algorithms","Python laboratory","Database Management\nSystem laboratory","Two credit course","Professional Skill\nTraining"];
+
 
                   if(snapshot.hasError)
                   {
@@ -202,21 +204,69 @@ class Neww extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child:
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: ni.length,
-                          itemBuilder: (BuildContext context, index){
-                            if(index>=2)
-                            return Column(
+                        Column(
+
+
+                          children: [
+                        Column(
+                        children: [
+                        SizedBox(height: 15,),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          height: 170,
+                          width: 350,
+                          decoration: BoxDecoration(
+                            color: Colors.deepPurple[900],
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${"GPA"}",
+                                        style:GoogleFonts.poppins(textStyle:TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24
+                                        ) ) ,
+                                      ),
+                                      SizedBox(height: 17,),
+                                      Text(
+                                        "Score   ${vv["GPA"]}",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+
+                                ],
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        ],
+                      ),
+                            Column(
                               children: [
                                 SizedBox(height: 15,),
                                 Container(
                                   padding: EdgeInsets.all(20),
-                                  height: 200,
+                                  height: 170,
                                   width: 350,
                                   decoration: BoxDecoration(
-                                    color: Colors.indigo,
+                                    color: Colors.deepPurple[900],
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Row(
@@ -231,7 +281,7 @@ class Neww extends StatelessWidget {
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "${ni[index]}",
+                                                "${"CGPA"}",
                                                 style:GoogleFonts.poppins(textStyle:TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 24
@@ -239,7 +289,7 @@ class Neww extends StatelessWidget {
                                               ),
                                               SizedBox(height: 17,),
                                               Text(
-                                                "Grade   ${vv[nn[index]]}",
+                                                "Score   ${vv["CGPA"]}",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 20,
@@ -257,59 +307,68 @@ class Neww extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            );
-                            else
-                              return Column(
-                                children: [
-                                  SizedBox(height: 15,),
-                                  Container(
-                                    padding: EdgeInsets.all(20),
-                                    height: 200,
-                                    width: 350,
-                                    decoration: BoxDecoration(
-                                      color: Colors.deepPurple[900],
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "${ni[index]}",
-                                                  style:GoogleFonts.poppins(textStyle:TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 24
-                                                  ) ) ,
-                                                ),
-                                                SizedBox(height: 17,),
-                                                Text(
-                                                  "Score   ${vv[nn[index]]}",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 20,
-                                                      fontWeight: FontWeight.w700
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: nn.length,
+                              itemBuilder: (BuildContext context, index){
+
+                                return Column(
+                                  children: [
+                                    SizedBox(height: 15,),
+                                    Container(
+                                      padding: EdgeInsets.all(20),
+                                      height: 170,
+                                      width: 350,
+                                      decoration: BoxDecoration(
+                                        color: Colors.indigo,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${nn[index]}",
+                                                    style:GoogleFonts.poppins(textStyle:TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 24
+                                                    ) ) ,
                                                   ),
-                                                ),
-                                              ],
-                                            ),
+                                                  SizedBox(height: 17,),
+                                                  Text(
+                                                    "Grade   ${vv[nn[index]]}",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                        fontWeight: FontWeight.w700
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
 
 
-                                          ],
-                                        ),
+                                            ],
+                                          ),
 
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              );
-                          },
+                                  ],
+                                );
+
+
+                              },
+                            ),
+                          ],
                         ),
                       );
                     }
@@ -322,7 +381,7 @@ class Neww extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      )
     );
   }
 }
