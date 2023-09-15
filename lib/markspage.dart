@@ -336,12 +336,15 @@ class Neww extends StatelessWidget {
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    "${nn[index]}",
-                                                    style:GoogleFonts.poppins(textStyle:TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 24
-                                                    ) ) ,
+                                                  Container(
+                                                    width:300,
+                                                    child: Text(
+                                                      "${nn[index]}",
+                                                      style:GoogleFonts.poppins(textStyle:TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 24
+                                                      ) ) ,
+                                                    ),
                                                   ),
                                                   SizedBox(height: 17,),
                                                   Text(
